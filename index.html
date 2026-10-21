@@ -42,9 +42,15 @@ h1{font-family:'Great Vibes','Brush Script MT',cursive;font-weight:400;font-size
 <article class="paper" id="paper"><div class="in">
 <h2>My dearest love,</h2>
 <p>One hundred days. It feels like a heartbeat and like a lifetime all at once. Every one of those days, you have quietly rewritten what happiness means to me.</p>
-<p>I counted one hundred roses for you, one for every morning I woke up grateful that you exist. One for your laugh that makes the whole room softer. One for the way you look at me as if I were someone worth looking at. And all the rest for the countless small moments I never want to forget.</p>
+<p>I counted one hundred roses for you today, giving every single bloom a memory to hold.</p>
+<p>One rose for our very first date after we officially became each other’s—when we held hands so tightly and stole shy, sweet kisses on the cheek.
+One rose for every time we wrapped our arms around each other; even when those hugs were brief, they were unforgettable.
+One rose for the little gifts we exchanged, each one a tender reminder of how deeply we cherish each other.
+One rose for our rushed meetings, when we only had a few minutes to talk, but still made sure to steal a quick hug and a kiss.
+One for the sound of your sleepy voice in the quiet of early mornings, and one for every time you smile.
+And all the remaining roses for the countless quiet everyday moments and the inside jokes that turned ordinary life into poetry</p>
 <p>Before you, I thought love was a word people used too easily. Now I know it is the warmth in my chest when your name lights up my phone, the calm that falls over me when you hold my hand, the ache when we are apart even for a single evening. I am hopelessly, deeply, beautifully yours.</p>
-<p>I love your strength and your gentleness. I love your sleepy voice and your stubborn little smile. I love the way you make ordinary days feel like poetry. You are my favorite hello and my hardest goodbye.</p>
+<p>I love your strength and your gentleness. I love your sleepy voice and your little giggles. You have become the bright spot of my days—truly my favorite hello that makes everything right, and my hardest, heaviest goodbye whenever we have to part.</p>
 <p>I promise to love you with my whole heart, not only on the easy days, but on the tired ones, the messy ones, the days when the world feels heavy. I promise to listen, to choose you again and again, to be your home and your adventure. I promise to grow old with you in the same stubborn, tender way that I fell: completely.</p>
 <p>These hundred roses will fade, but my love for you will not. It will bloom a little more with every sunrise, every year, every chapter we write together. Today is only the first hundred. I want all the rest of them with you.</p>
 <p>I love you, not just today, but forever, with every beat of my heart. I love you 100%, and then some.</p>
@@ -55,7 +61,7 @@ h1{font-family:'Great Vibes','Brush Script MT',cursive;font-weight:400;font-size
 (function(){
 var cv=document.getElementById('c'),ctx=cv.getContext('2d'),W,H,dpr=Math.min(window.devicePixelRatio||1,2);
 var cols=['#e11d48','#be123c','#f43f5e','#fb7185','#d6336c','#ec4899','#c026d3'];
-var BOUQUET_SRC='100roses.webp' 
+var BOUQUET_SRC='100roses.webp',img=null,ready=false,bx=0,by=0,bw=0,bh=0,dragging=false;
 var roses=[],petals=[],a=0,v=0,last=null,t=0;
 function build(){roses=[];var rings=[1,6,12,18,24,39],n=0;
 rings.forEach(function(c,k){var rho=k/5;for(var i=0;i<c;i++){var th=(i/c)*Math.PI*2+k*.5+Math.random()*.2;
@@ -68,7 +74,7 @@ ctx.save();ctx.translate(px+a*W*.2,py);ctx.rotate(a);ctx.translate(-px,-py);
 if(ready){var s=Math.min(W*.74/img.width,(H-24)/img.height),iw=img.width*s,ih=img.height*s;bx=px-iw/2;by=py-14-ih;bw=iw;bh=ih;ctx.drawImage(img,bx,by,iw,ih);}
 ctx.restore();
 petals.forEach(function(p){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.h?Math.sin(p.r)*.4:p.r);ctx.fillStyle=p.c;ctx.globalAlpha=p.l;
-ctx.beginPath();if(p.h){var q=p.s*1.1;ctx.moveTo(0,q*.35);ctx.bezierCurveTo(-q*1.1,-q*.3,-q*.5,-q*.95,0,-q*.35);ctx.bezierCurveTo(q*.5,-q*.95,q*1.1,-q*.3,0,q*.35);}else{ctx.ellipse(0,0,p.s,p.s*.55,0,0,6.28);}ctx.fill();ctx.restore();});}
+ctx.beginPath();if(p.h){var q=p.s*1.3;ctx.moveTo(0,q*.35);ctx.bezierCurveTo(-q*1.1,-q*.3,-q*.5,-q*.95,0,-q*.35);ctx.bezierCurveTo(q*.5,-q*.95,q*1.1,-q*.3,0,q*.35);}else{ctx.ellipse(0,0,p.s,p.s*.55,0,0,6.28);}ctx.fill();ctx.restore();});}
 function spawn(n){for(var i=0;i<n;i++){var r=roses[(Math.random()*roses.length)|0],p=ready?{x:bx+bw*(.2+Math.random()*.6),y:by+bh*(.1+Math.random()*.4)}:pos(r);
 petals.push({x:p.x,y:p.y+Math.random()*10,vx:(Math.random()-.5)*2+v*40,vy:-Math.random(),r:Math.random()*6,vr:(Math.random()-.5)*.2,s:6+Math.random()*5,c:cols[(Math.random()*4)|0],l:1,h:Math.random()<.2,ph:Math.random()*6});}}
 function tick(ts){t=ts/1000;
@@ -78,7 +84,7 @@ petals=petals.filter(function(p){return p.l>0&&p.y<H+20;});
 draw();requestAnimationFrame(tick);}
 cv.addEventListener('pointermove',function(e){var r=cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
 if(dragging&&last){var dx=x-last.x,dy=y-last.y,sp=Math.hypot(dx,dy);v+=Math.max(-.004,Math.min(.004,dx*.0003));
-if(sp>8&&Math.random()<.25&&petals.length<25)spawn(1);}
+if(sp>8&&Math.random()<.4&&petals.length<25)spawn(2);}
 last={x:x,y:y};});
 function stop(){dragging=false;last=null;}
 cv.addEventListener('pointerup',stop);cv.addEventListener('pointercancel',stop);cv.addEventListener('pointerleave',stop);
